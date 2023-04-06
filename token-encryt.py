@@ -26,4 +26,4 @@ filename="publicKey.tk1"
 # # For Decoding
 print("Searching for",filename,"file")
 with open(filename) as keyFile:
-    print(mdecode(keyFile.readline()))
+    print(mdecode(keyFile.readline().strip()))

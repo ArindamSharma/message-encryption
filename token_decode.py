@@ -42,6 +42,6 @@ except:
 
 try:
     with open(filename ,"r") as keyFile:
-        print(mdecode(keyFile.readline(),getpass("Decryption privateKey: ")))
+        print(mdecode(keyFile.readline().strip(),getpass("Decryption privateKey: ")))
 except FileNotFoundError as e:
     print(e)
