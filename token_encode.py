@@ -1,4 +1,5 @@
 from getpass import getpass
+from sys import argv
 def mencode(string,privateKey)->str:
     # encrypting 
     e=""
@@ -20,7 +21,24 @@ def mencode(string,privateKey)->str:
     return a
 
 # For Encoding
-print("Will generate/update publicKey.tk2 file")
-with open("publicKey.tk2","w") as keyFile:
+
+# default filename
+filename="publicKey"
+
+try:
+    x=argv[1].split(".")
+    if(len(x)>1):
+        if(x[-1]=="tk2"):
+            filename=argv[1]
+        else:
+            print("Wrong File Format")
+            exit(1)
+    else:
+        filename=argv[1]+".tk2"
+except IndexError:
+    filename+=".tk2"
+
+print("Will generate/update "+filename+" file")
+with open(filename,"w") as keyFile:
     x=mencode(input("Enter Message to Encrypt\n"),getpass("Encryption privateKey: "))
     keyFile.write(x)

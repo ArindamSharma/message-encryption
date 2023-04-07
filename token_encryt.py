@@ -1,11 +1,12 @@
-def mencode(string)->str:
+from sys import argv
+def mencode(string:str)->str:
     a=''
     for i in string:
         # print(ord(i))
         a+=str(len(str(ord(i))))+str(ord(i))
     return a
 
-def mdecode(string)->str:
+def mdecode(string:str)->str:
     # storage conversion
     a=""
     i=0
@@ -17,13 +18,43 @@ def mdecode(string)->str:
     return a
 
 # public Key
-filename="publicKey.tk1"
+filename="publicKey"
+
+#  Toggle switch
+# 0 -> for encoding/encrypting
+# 1-> for decoding/decrypting
+toggle=0
+
+try:
+    if(argv[1] in ["encrypt","encode"]):
+        toggle=1
+    elif(argv[1] in ["decrypt","decode"]):
+        toggle=0
+    else:
+        print("Invalid Switch Condition")
+        exit(1)
+
+    # filename validation/correction
+    x=argv[2].split(".")
+    if(len(x)>1):
+        if(x[-1]=="tk1"):
+            filename= argv[2]
+        else:
+            raise TypeError("Unsupported File Type : "+argv[2])
+    else:
+        filename=argv[2]+".tk1"
+
+except IndexError:
+    filename+=".tk1"
 
 # For Encoding 
-# with open(filename,"w") as keyFile:
-#     keyFile.write(mencode(input("Enter Message to Encrypt: ")))
+if(toggle): 
+    print("Will Generate/Update",filename,"file")
+    with open(filename,"w") as keyFile:
+        keyFile.write(mencode(input("Enter Message to Encrypt: ")))
 
-# # For Decoding
-print("Searching for",filename,"file")
-with open(filename) as keyFile:
-    print(mdecode(keyFile.readline().strip()))
+# For Decoding
+else:
+    print("Reading/Searching for",filename,"file")
+    with open(filename) as keyFile:
+        print("\n",mdecode(keyFile.readline().strip()))

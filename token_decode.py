@@ -30,15 +30,18 @@ def mdecode(string,privateKey)->str:
 # For Decoding publicKey.tk2
 
 # default filename
-filename="publicKey.tk2"
+filename="publicKey"
 try:
-    if(argv[1].split(".")[-1]=="tk2"):
-        filename=argv[1]
+    x=argv[1].split(".")
+    if(len(x)>1):
+        if(x[-1]=="tk2"):
+            filename=argv[1]
+        else:
+            raise TypeError("Wrong File Format")
     else:
-        print("Wrong File Format")
-        exit(1)
-except:
-    pass
+        filename=argv[1]+".tk2"
+except IndexError:
+    filename+=".tk2"
 
 try:
     with open(filename ,"r") as keyFile:
